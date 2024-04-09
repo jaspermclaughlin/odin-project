@@ -1,4 +1,27 @@
-const prompt = require("prompt-sync")()
+const buttons = document.querySelectorAll("button");
+
+let computerScore = 0;
+let userScore = 0;
+let scoreWindow = document.querySelector(".scores");
+let playerSelection;
+let computerSelection;
+
+scoreWindow.innerHTML = userScore + " : " + computerScore;
+
+function startGame() {
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      playerSelection = button.id;
+      singleRound(playerSelection, getComputerChoice());
+      checkWinner();
+    });
+  });
+}
+function renderScore(computerScore, userScore) {
+  scoreWindow.innerText = `${computerScore} : ${userScore}`;
+}
+renderScore();
+startGame();
 
 function getComputerChoice() {
   var choices = ["Rock", "Paper", "Scissors"];
@@ -7,31 +30,30 @@ function getComputerChoice() {
 }
 
 function singleRound(playerSelection, computerSelection) {
-    playerSelection = playerSelection[0].toUpperCase(0) + playerSelection.slice(1).toLowerCase()
+  playerSelection =
+    playerSelection[0].toUpperCase(0) + playerSelection.slice(1).toLowerCase();
+  let result = document.getElementById("result");
   if (
     (playerSelection == "Rock" && computerSelection == "Scissors") ||
     (playerSelection == "Paper" && computerSelection == "Rock") ||
     (playerSelection == "Scissors" && computerSelection == "Paper")
   ) {
-    return "You win! " + playerSelection + " beats " + computerSelection;
+    userScore++;
   } else if (playerSelection == computerSelection) {
-    return "It's a tie. Go again.";
+    alert("It's a tie. Go again.");
   } else {
-    return "You lose. " + computerSelection + " beats " + playerSelection;
+    computerScore++;
+  }
+  scoreWindow.innerHTML = userScore + " : " + computerScore;
+  return computerScore, userScore;
+}
+
+function checkWinner() {
+  let winner = document.getElementById("winner");
+
+  if (userScore == 5) {
+    alert("Congratulations! You won 5 times!");
+  } else if (computerScore == 5) {
+    alert("Oh no! The computer won 5 times!");
   }
 }
-
-
-function singleGame(){
-const playerSelection = prompt("Is your choice Rock, Paper or Scissors? ");
-const computerSelection = getComputerChoice();
-return (singleRound(playerSelection, computerSelection));
-}
-
-function playGame() {
-  for (let i = 0; i < 5; i++ ) {
-    console.log(singleGame())
-  }
-}
-
-playGame()

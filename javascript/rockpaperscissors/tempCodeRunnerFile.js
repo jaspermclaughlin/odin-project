@@ -5,7 +5,7 @@ function getComputerChoice() {
 }
 
 function singleRound(playerSelection, computerSelection) {
-    playerSelection = toLowerCase(playerSelection)
+  playerSelection = toLowerCase(playerSelection);
   if (
     (playerSelection == "Rock" && computerSelection == "Scissors") ||
     (playerSelection == "Paper" && computerSelection == "Rock") ||
